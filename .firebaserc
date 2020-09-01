@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "tmbo-20200901",
+    "staging": "stage-tmbo-2020"
+  }
+}
