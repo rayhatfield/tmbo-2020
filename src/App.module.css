@@ -1,0 +1,35 @@
+:global(:root) {
+  --background-color: #336;
+  --text-color-primary: #ccc;
+  
+  --text-font-family: "Gotham SSm A", "Gotham SSm B";
+  --text-font-weight: 300;
+  --text-font-weight-bold: 500;
+  --line-height: 1.6;
+
+  --heading-font-family: "Whitney Cond SSm A", "Whitney Cond SSm B";
+  --heading-font-weight: 700;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font-family);
+  font-weight: var(--heading-font-weight);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+button {
+  appearance: none;
+  border: none;
+  background: none;
+  color: var(--text-color-primary);
+}
+
+.root {
+  min-height: 100vh;
+  background: var(--background-color);
+  color: var(--text-color-primary);
+  font-family: var(--text-font-family);
+  font-weight: var(--text-font-weight);
+  line-height: var(--line-height);
+}

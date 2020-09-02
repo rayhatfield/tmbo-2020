@@ -1,16 +1,40 @@
-export default class TmboFirebaseClient {
+import Emitter from 'events';
+
+import { EVENTS } from '../../';
+
+export default class TmboFirebaseClient extends Emitter {
     constructor (firebase) {
+        super();
         this.firebase = firebase;
         this.db = firebase.firestore();
+        this.firebase.auth().onAuthStateChanged(user => this.emit(EVENTS.AUTH_STATE_CHANGED, user))
     }
 
-    async posts () {
-        return this.db.collection('posts').get();
+    async logIn (email, password) {
+        try {
+            this.firebase.auth().signInWithEmailAndPassword(email, password);
+        }
+        catch (e) {
+            console.log('nope');
+            console.log(e.message);
+            throw e;
+        }
     }
 
-    async post (title) {
+    logOut () {
+        this.firebase.auth().signOut();
+    }
+
+    async posts (start = 0, limit = 10) {
+        return this.db.collection('posts')
+            .orderBy('date', 'desc')
+            .limit(limit)
+            .get();
+    }
+
+    async post (title = 'what') {
         const p = await this.db.collection('posts').add({
-            title: 'what',
+            title,
             date: Date.now()
         });
         return p.get();
