@@ -5,3 +5,12 @@
     background-color: var(--color-header-bg);
     padding: calc(var(--vertical-grid-size) / 4);
 }
+
+.nav {
+    display: flex;
+    gap: .5rem;
+}
+
+.active {
+    text-decoration: underline;
+}

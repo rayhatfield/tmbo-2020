@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { useClient } from '../api';
+
+import styles from './LoginView.module.css';
 
 export default function LoginView (props) {
     const client = useClient();
@@ -13,7 +14,7 @@ export default function LoginView (props) {
 
     }, [client]);
     return (
-        <form onSubmit={logIn}>
+        <form className={styles.root} onSubmit={logIn}>
             <input name="email" type="email" />
             <input name="password" type="password" />
             <button>Log In</button>

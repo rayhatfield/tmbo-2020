@@ -9,7 +9,9 @@ export default function Layout (props) {
     return (
         <div className={styles.root}>
             <Header />
-            <Router />
+            <main className={styles.main}>
+                <Router />
+            </main>
             <Footer />
         </div>
     );
