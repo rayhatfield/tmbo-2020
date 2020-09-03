@@ -1,28 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { LoginView, useUser } from './auth';
-import { View as Posts } from './posts';
+import { useUser } from '../auth';
 
-const anonymousRoutes = [
-    {
-        path: "/",
-        component: LoginView
-    }
-]
+import { anonymous, authenticated } from './routes';
 
-const authenticatedRoutes = [
-    {
-        path: "/",
-        component: Posts
-    }
-]
-
-export default function Routr (props) {
+export default function Routr () {
     const user = useUser();
     const checkingLogin = user === undefined; // if user is null we're not logged in. if it's undefined we don't know yet.
-    const routes = user ? authenticatedRoutes : anonymousRoutes;
+    const routes = user ? authenticated : anonymous;
     return checkingLogin ? null : (
         <Router>
             <Switch>

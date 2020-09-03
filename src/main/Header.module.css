@@ -1,0 +1,7 @@
+.root {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background-color: var(--color-header-bg);
+    padding: calc(var(--vertical-grid-size) / 4);
+}

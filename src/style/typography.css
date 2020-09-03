@@ -1,0 +1,25 @@
+:root {
+    font-size: 16px;
+    --typography-scale: 1.125;
+    --font-size-normal: 1rem;
+    --vertical-grid-size: 1.5rem;
+
+    --text-font-family: "Gotham SSm A", "Gotham SSm B";
+    --text-font-weight: 300;
+    --text-font-weight-bold: 500;
+    --line-height: var(--vertical-grid-size);
+    --max-line-length: 65ch;
+
+    --heading-font-family: "Whitney Cond SSm A", "Whitney Cond SSm B";
+    --heading-font-weight: 700;
+
+    /* going up */
+    --font-size-large: calc(var(--font-size-normal) * var(--typography-scale));
+    --font-size-xl: calc(var(--font-size-large) * var(--typography-scale));
+    --font-size-xxl: calc(var(--font-size-xl) * var(--typography-scale));
+
+    /* going down */
+    --font-size-small: calc(var(--font-size-normal) / var(--typography-scale));
+    --font-size-xs: calc(var(--font-size-small) / var(--typography-scale));
+    --font-size-xxs: calc(var(--font-size-xs) / var(--typography-scale));
+}

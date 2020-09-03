@@ -1,0 +1,7 @@
+:root {
+    --color-body-bg: #336;
+    --color-text-primary: #ccf;
+    --color-header-bg: #003;
+    --color-footer-bg: var(--color-header-bg);
+}
+

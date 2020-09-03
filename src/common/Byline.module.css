@@ -1,0 +1,6 @@
+.root {
+    opacity: 0.5;
+    font-size: var(--font-size-xs);
+    display: flex;
+    gap: 0.5em;
+}

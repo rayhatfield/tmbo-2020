@@ -1,0 +1,4 @@
+.root {
+    max-width: var(--max-line-length);
+    margin: 0 auto;
+}

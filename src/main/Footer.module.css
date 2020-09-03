@@ -1,0 +1,4 @@
+.root {
+    background-color: var(--color-footer-bg);
+    padding: var(--vertical-grid-size);
+}

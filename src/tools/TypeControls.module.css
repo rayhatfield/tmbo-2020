@@ -1,0 +1,34 @@
+.root {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    background: #ffffff33;
+}
+
+.show-grid {
+    --offset: calc(--var(--vertical-grid-size) / 1.5);
+    background-image:
+        linear-gradient( /* large divisions */
+            transparent calc(var(--vertical-grid-size) * 2 - 1px),
+            rgba(255,255,0,.375) calc(var(--vertical-grid-size) * 2)
+        ),
+        linear-gradient( /* main grid */
+            transparent calc(var(--vertical-grid-size) - 1px),
+            rgba(255,255,255,.25) var(--vertical-grid-size)
+        ),
+        linear-gradient( /* subdivisions */
+            transparent calc(var(--vertical-grid-size) - 1px),
+            rgba(255,255,255,.125) var(--vertical-grid-size)
+        );
+        
+    background-size:
+        calc(var(--vertical-grid-size) * 2) calc(var(--vertical-grid-size) * 2),
+        var(--vertical-grid-size) var(--vertical-grid-size),
+        var(--vertical-grid-size) var(--vertical-grid-size);
+
+    background-position-y:
+        var(--vertical-grid-size),
+        var(--vertical-grid-size),
+        calc(var(--vertical-grid-size) / 2);
+}
