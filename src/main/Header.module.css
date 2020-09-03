@@ -4,6 +4,10 @@
     align-items: baseline;
     background-color: var(--color-header-bg);
     padding: calc(var(--vertical-grid-size) / 4);
+    margin-bottom: var(--vertical-grid-size);
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .nav {

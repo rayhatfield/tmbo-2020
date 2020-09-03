@@ -2,3 +2,7 @@
     max-width: var(--max-line-length);
     margin: 0 auto;
 }
+
+.root header {
+    margin-bottom: calc(var(--vertical-grid-size) * 0.5);
+}

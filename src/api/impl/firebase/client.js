@@ -2,12 +2,45 @@ import Emitter from 'events';
 
 import { EVENTS } from '../../';
 
+const pad = v => `${v}`.padStart(2, '0');
+
+const BASE_IMAGE_PATH = 'uploads/images'
+
+const getImagePath = () => {
+    const today = new Date();
+    const year = today.getUTCFullYear();
+    const month = pad(today.getUTCMonth() + 1);
+    const date = pad(today.getUTCDate());
+    return [BASE_IMAGE_PATH, year, month, date].join('/');
+}
+
 export default class TmboFirebaseClient extends Emitter {
     constructor (firebase) {
         super();
         this.firebase = firebase;
         this.db = firebase.firestore();
         this.firebase.auth().onAuthStateChanged(user => this.emit(EVENTS.AUTH_STATE_CHANGED, user))
+    }
+
+    async upload (file) {
+        const storageRef = this.firebase.storage().ref();
+        const uploadRef = storageRef.child(getImagePath()).child(`${Date.now()}.jpg`);
+        try {
+            const uploadTask = uploadRef.put(file);
+            uploadTask.on('state_changed',
+                snapshot => console.log(snapshot.state), // progress, etc
+                error => console.log(error), // error
+                async () => {
+                    const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                    console.log('File available at', downloadURL);
+                },
+            )
+        }
+        catch (e) {
+            console.log(e);
+            throw e;
+        }
+
     }
 
     async logIn (email, password) {

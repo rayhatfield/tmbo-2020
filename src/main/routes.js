@@ -1,5 +1,6 @@
 import { LoginView, useUser } from '../auth';
 import { View as Posts } from '../posts';
+import Upload from '../upload';
 import TypeTest from '../tools/TypeTest';
 
 const anonymous = [
@@ -25,6 +26,11 @@ const authenticated = [
         props: {
             type: 'discussion'
         }
+    },
+    {
+        label: 'upload',
+        path: "/u",
+        component: Upload,
     },
     {
         label: 'type',
