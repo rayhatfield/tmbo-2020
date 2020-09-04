@@ -1,3 +1,22 @@
+# tmbo-2020
+
+![Website](https://img.shields.io/website?label=tmbo.wtf&url=https%3A%2F%2Ftmbo.wtf)
+
+This project is yet another of my periodic runs at creating a modern version of the original [this might be offensive](https://github.com/numist/this-might-be-offensive/) site, which is now old enough to drink.
+
+This version is deployed at [tmbo.wtf](https://tmbo.wtf).
+
+## Goals
+* Modernize the UI. Make it responsive. Mobile friendly. Leverage CSS. No more [tables](https://github.com/numist/this-might-be-offensive/blob/1c4cc504b8cf3f2996e35ae5d86161ed19b5ad38/offensive/index.php#L442) and [bgcolor](https://github.com/numist/this-might-be-offensive/blob/1c4cc504b8cf3f2996e35ae5d86161ed19b5ad38/offensive/index.php#L178) attributes.
+* Make it fun to develop again. Ditch the cruft. Start fresh. No more php.
+* Learn stuff.
+* Retain the spirit of the original. Free. No ads. No data harvesting. No monetization at the expense of maxxers.
+
+## Tech
+This project uses [React](https://reactjs.org) for the front end and relies entirely on Google's [Firebase](https://firebase.google.com/) cloud services for the back end.
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
