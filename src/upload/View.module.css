@@ -15,6 +15,25 @@
 
 .file-input-container {
     flex: 1 1 100%;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.file-input-container .prompt {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+.file-input-container .prompt > span {
+    display: inline-block;
+    padding: var(--vertical-grid-size);
+    /* background: #ffffff33; */
+    border-radius: 100px;
+    min-width: 600px;
+    /* border: 1px solid #ffffff33; */
 }
 
 .controls {

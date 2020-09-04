@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import clsx from 'clsx';
 
 import { useClient } from '../api';
 
@@ -24,11 +25,13 @@ export default function View (props) {
     }, [client, file]);
 
     const onFileInfoChange = (({ target: { name, value } }) => setFileInfo({ ...fileInfo, [name]: value }))
+    const prompt = !file ? 'Put ’er there' : 'Change';
 
     return (
         <form className={styles.root} onSubmit={onSubmit}>
-            <div className={styles['file-input-container']}>
+            <div className={clsx(styles['file-input-container'], { [styles.empty]: !file })}>
                 <Preview file={file} />
+                <div className={styles.prompt}><span>{prompt}</span></div>
                 <input type="file" name="upload" onChange={onFileChange} />
             </div>
             <div className={styles.controls}>
