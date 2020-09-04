@@ -6,9 +6,6 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-import-resolver-webpack": "^0.12.2",
-    "eslint-plugin-import": "^2.22.0",
     "firebase": "^7.19.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -39,6 +36,9 @@
     ]
   },
   "devDependencies": {
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-import-resolver-webpack": "^0.12.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.6"
   }
