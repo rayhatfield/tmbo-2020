@@ -27,11 +27,6 @@
     text-align: center;
 }
 
-.file-input-container .prompt > span {
-    display: inline-block;
-    padding: var(--vertical-grid-size);
-}
-
 .controls {
     flex: 1 1 0;
     padding: var(--vertical-grid-size, 1rem) 0;
