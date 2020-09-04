@@ -2,6 +2,10 @@
 @import './color.css';
 @import './typography.css';
 
+* {
+    box-sizing: border-box;
+}
+
 a {
     color: currentColor;
     text-decoration: none;
@@ -9,6 +13,16 @@ a {
 
 p {
     margin-bottom: var(--vertical-grid-size);
+}
+
+img {
+    max-width: 100%;
+}
+
+input {
+    border: none;
+    font-family: var(--text-font-family);
+    padding: calc(var(--vertical-grid-size) / 2);
 }
 
 body {
