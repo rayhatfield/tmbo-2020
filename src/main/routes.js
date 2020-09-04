@@ -1,7 +1,7 @@
 import { LoginView, useUser } from '../auth';
 import { View as Posts } from '../posts';
 import Upload from '../upload';
-import TypeTest from '../tools/TypeTest';
+import Tools from '../tools';
 
 const anonymous = [
     {
@@ -33,9 +33,9 @@ const authenticated = [
         component: Upload,
     },
     {
-        label: 'type',
-        path: "/type",
-        component: TypeTest,
+        label: 'dev',
+        path: "/dev",
+        component: Tools,
     },
 ]
 
