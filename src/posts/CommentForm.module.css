@@ -1,0 +1,5 @@
+.root textarea {
+    width: 100%;
+    height: clamp(150px, 300px, 30vh);
+    padding: calc(var(--vertical-grid-size) / 2);
+}

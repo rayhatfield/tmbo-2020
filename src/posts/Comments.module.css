@@ -1,0 +1,11 @@
+.root {
+    max-width: var(--max-line-length);
+}
+
+.comment {
+    margin-bottom: var(--vertical-grid-size);
+}
+
+.content {
+    white-space: pre-line;
+}
