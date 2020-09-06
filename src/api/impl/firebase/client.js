@@ -68,7 +68,7 @@ export default class TmboFirebaseClient extends Emitter {
     async comments (postId, start = 0, limit = 200) {
         return this.db.doc(`/posts/${postId}`)
             .collection('comments')
-            .orderBy('date', 'asc')
+            .orderBy('date', 'desc')
             .limit(limit)
             .get();
     }

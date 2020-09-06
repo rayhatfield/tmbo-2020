@@ -35,7 +35,7 @@ export default function CommentListContainer ({ postId }) {
 
     const getDocs = useCallback(async () => {
         const snapshot = await client.comments(postId);
-        setDocs([...snapshot.docs]);
+        setDocs([...snapshot.docs].reverse());
     }, [client, postId])
 
     useEffect(() => {
