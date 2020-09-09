@@ -1,5 +1,7 @@
 import Emitter from 'events';
 
+import * as firebase from 'firebase';
+
 import { EVENTS } from '../../';
 
 const pad = v => `${v}`.padStart(2, '0');
@@ -15,16 +17,22 @@ const getImagePath = () => {
 }
 
 export default class TmboFirebaseClient extends Emitter {
-    constructor (firebase) {
+    constructor (app) {
         super();
-        this.firebase = firebase;
-        this.db = firebase.firestore();
-        this.firebase.auth().onAuthStateChanged(user => this.emit(EVENTS.AUTH_STATE_CHANGED, user))
+        this.app = app;
+        this.db = app.firestore();
+        this.app.auth().onAuthStateChanged(user => this.emit(EVENTS.AUTH_STATE_CHANGED, user));
     }
 
+    commonFields = () => ({
+        uid: this.app.auth().getUid(),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+
     async upload (file) {
-        const storageRef = this.firebase.storage().ref();
-        const uploadRef = storageRef.child(getImagePath()).child(`${Date.now()}.jpg`);
+        const storageRef = this.app.storage().ref();
+        const filename = `${Date.now()}-${this.app.auth().getUid()}`;
+        const uploadRef = storageRef.child(getImagePath()).child(filename);
         try {
             const uploadTask = uploadRef.put(file);
             uploadTask.on('state_changed',
@@ -45,7 +53,7 @@ export default class TmboFirebaseClient extends Emitter {
 
     async logIn (email, password) {
         try {
-            this.firebase.auth().signInWithEmailAndPassword(email, password);
+            this.app.auth().signInWithEmailAndPassword(email, password);
         }
         catch (e) {
             console.log('nope');
@@ -55,12 +63,12 @@ export default class TmboFirebaseClient extends Emitter {
     }
 
     logOut () {
-        this.firebase.auth().signOut();
+        this.app.auth().signOut();
     }
 
     async posts (start = 0, limit = 10) {
         return this.db.collection('posts')
-            .orderBy('date', 'desc')
+            .orderBy('timestamp', 'desc')
             .limit(limit)
             .get();
     }
@@ -68,22 +76,22 @@ export default class TmboFirebaseClient extends Emitter {
     async comments (postId, start = 0, limit = 200) {
         return this.db.doc(`/posts/${postId}`)
             .collection('comments')
-            .orderBy('date', 'desc')
+            .orderBy('timestamp', 'desc')
             .limit(limit)
             .get();
     }
 
     async post (title = 'what') {
         const p = await this.db.collection('posts').add({
+            ...this.commonFields(),
             title,
-            date: Date.now()
         });
         return p.get();
     }
 
     async comment (postId, comment) {
         const c = await this.db.collection('posts').doc(postId).collection('comments').add({
-            date: Date.now(),
+            ...this.commonFields(),
             comment
         });
         return c.get();

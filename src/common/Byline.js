@@ -6,7 +6,7 @@ import DateTime from './DateTime';
 import style from './Byline.module.css';
 
 export default function Byline ({ post }) {
-    const { author, date } = post || {};
+    const { author, timestamp } = post || {};
     return (
         <div className={style.root}>
             {author && (
@@ -14,8 +14,8 @@ export default function Byline ({ post }) {
                     <Author author={post?.author} />
                 </address>
             )}
-            {date && (
-                <DateTime date={post?.date} />
+            {timestamp && (
+                <DateTime date={post.timestamp.toMillis()} />
             )}
         </div>
     );
@@ -27,6 +27,8 @@ Byline.propTypes = {
             displayName: PropTypes.string,
             id: PropTypes.string.isRequired
         }),
-        date: PropTypes.number
+        timestamp: PropTypes.shape({
+            toMillis: PropTypes.func.isRequired,
+        })
     })
 }
