@@ -2,22 +2,22 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-const {api} = require('./api');
+// const {api} = require('./api');
 
-exports.api = functions.https.onRequest(api);
+// exports.api = functions.https.onRequest(api);
 
-exports.addComment = functions.https.onRequest(async (req, res) => {
-    const { postId, comment } = req.query;
-    const result = await admin.firestore()
-        .collection('posts')
-        .doc(postId)
-        .collection('comments')
-        .add({
-            date: Date.now(),
-            comment
-        });
-    res.json({ result: JSON.stringify(result) });
-});
+// exports.addComment = functions.https.onRequest(async (req, res) => {
+//     const { postId, comment } = req.query;
+//     const result = await admin.firestore()
+//         .collection('posts')
+//         .doc(postId)
+//         .collection('comments')
+//         .add({
+//             date: Date.now(),
+//             comment
+//         });
+//     res.json({ result: JSON.stringify(result) });
+// });
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
