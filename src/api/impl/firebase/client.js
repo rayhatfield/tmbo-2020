@@ -16,7 +16,7 @@ const withExtension = (name, ext) => (
 );
 
 const BASE_IMAGE_STORAGE_PATH = 'uploads/images';
-const UPLOADS_COLLECTION = 'discussions';
+const UPLOADS_COLLECTION = 'uploads';
 
 const getImagePath = () => {
     const today = new Date();
@@ -31,13 +31,25 @@ export default class TmboFirebaseClient extends Emitter {
         super();
         this.app = app;
         this.db = app.firestore();
-        this.app.auth().onAuthStateChanged(user => this.emit(EVENTS.AUTH_STATE_CHANGED, user));
+        this.app.auth().onAuthStateChanged(user => {
+            this.emit(EVENTS.AUTH_STATE_CHANGED, user)
+            this.user = user;
+        });
     }
 
     commonFields = () => ({
-        uid: this.app.auth().getUid(),
+        uid: this.user.uid,
+        displayName: this.user.displayName,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     })
+
+    async updateProfile ({ displayName }) {
+        this.user.updateProfile({
+            displayName
+        }).then(() => {
+            console.log(`display name updated. ${this.user.displayName}`)
+        })
+    }
 
     async upload (file, title = file.name) {
         const extension = mime.getExtension(file.type);
@@ -45,35 +57,44 @@ export default class TmboFirebaseClient extends Emitter {
 
         const filename = slugify(`${Date.now()}-${withExtension(title, extension)}`, '-');
         const uploadRef = storageRef.child(getImagePath()).child(filename);
-        const uid = this.app.auth().getUid();
         const metadata = {
             customMetadata: {
-                uid,
+                uid: this.user.uid,
                 title
             }
         }
         try {
-            const uploadTask = uploadRef.put(file, metadata);
-            uploadTask.on('state_changed',
-                // next
-                snapshot => {
-                    const { state, bytesTransferred, totalBytes } = snapshot;
-                    console.log(state, bytesTransferred, totalBytes, (bytesTransferred / totalBytes * 100) + '%')
-                },
-                // error
-                error => console.log(error),
-                // complete
-                async () => {
-                    const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-                    console.log('File available at', downloadURL);
-                    const result = await this.createImageDiscussion({
-                        id: filename,
-                        path: uploadRef.fullPath,
-                        title,
-                    });
-                    console.log(result);
-                },
-            )
+            return new Promise((resolve, reject) => {
+                const uploadTask = uploadRef.put(file, metadata);
+                uploadTask.on('state_changed',
+                    // next
+                    snapshot => {
+                        const { state, bytesTransferred, totalBytes } = snapshot;
+                        console.log(state, bytesTransferred, totalBytes, (bytesTransferred / totalBytes * 100) + '%')
+                    },
+                    // error
+                    error => console.log(error),
+                    // complete
+                    async () => {
+                        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                        console.log('File available at', downloadURL);
+
+                        // const extension = path.extname(uploadRef.name);
+                        // const thumbPath = `${uploadRef.parent.fullPath}/previews/${uploadRef.name.replace(extension, `_400x400${extension}`)}`
+
+                        const uploadDoc = {
+                            id: filename,
+                            path: uploadRef.fullPath,
+                            downloadURL,
+                            title,
+                        };
+
+                        await this.createUploadDoc(uploadDoc);
+
+                        resolve(uploadDoc);
+                    },
+                )
+            })
         }
         catch (e) {
             console.log(e);
@@ -82,11 +103,15 @@ export default class TmboFirebaseClient extends Emitter {
 
     }
 
-    async createImageDiscussion ({ id, path, title }) {
+    async getUploadDoc (id) {
+        const doc = await this.db.doc(`${UPLOADS_COLLECTION}/${id}`).get();
+        return doc.data();
+    }
+
+    async createUploadDoc ({ id, ...fields }) {
         return this.db.collection(UPLOADS_COLLECTION).doc(id).set({
             ...this.commonFields(),
-            path,
-            title,
+            ...fields
         });
     }
 
@@ -113,7 +138,6 @@ export default class TmboFirebaseClient extends Emitter {
     }
 
     async posts (type, start = 0, limit = 10) {
-        console.log(type);
         return type === 'image'
             ? this.imageList()
             : this.db.collection('posts')
@@ -123,7 +147,7 @@ export default class TmboFirebaseClient extends Emitter {
     }
 
     async comments (postId, start = 0, limit = 200) {
-        return this.db.doc(`/posts/${postId}`)
+        return this.db.doc(`${UPLOADS_COLLECTION}/${postId}`)
             .collection('comments')
             .orderBy('timestamp', 'desc')
             .limit(limit)
@@ -139,7 +163,7 @@ export default class TmboFirebaseClient extends Emitter {
     }
 
     async comment (postId, comment) {
-        const c = await this.db.collection('posts').doc(postId).collection('comments').add({
+        const c = await this.db.doc(`${UPLOADS_COLLECTION}/${postId}`).collection('comments').add({
             ...this.commonFields(),
             comment
         });

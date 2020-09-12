@@ -1,5 +1,6 @@
 .root {
     max-width: var(--max-line-length);
+    margin-bottom: calc(var(--vertical-grid-size) * 2);
 }
 
 .comment {

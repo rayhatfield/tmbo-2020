@@ -10,8 +10,8 @@ const Comment = ({ post }) => {
     const p = post.data();
     return (
         <div className={styles.comment}>
-            <div className={styles.content}>{p.comment}</div>
             <Byline post={p} />
+            <div className={styles.content}>{p.comment}</div>
         </div>
     )
 }

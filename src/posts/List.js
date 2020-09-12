@@ -8,12 +8,13 @@ import styles from './List.module.css';
 
 const Post = ({ post }) => {
     const { path: matchPath } = useRouteMatch();
-    const p = post.data();
     return (
-        <Link to={`${matchPath}/${post.id}`}>
-            <div>{p.title}</div>
-            <Byline post={p} />
-        </Link>
+        <div>
+            <Link to={`${matchPath}/${post.id}`}>
+                <div>{post.title}</div>
+            </Link>
+            <Byline post={post} />
+        </div>
     )
 }
 
@@ -36,7 +37,7 @@ export default function ListContainer ({ type }) {
 
     const getDocs = useCallback(async () => {
         const snapshot = await client.posts(type);
-        setDocs([...snapshot.docs]);
+        setDocs([...snapshot.docs].map(d => ({ id: d.id, ...d.data() })));
     }, [client, type])
 
     useEffect(() => {

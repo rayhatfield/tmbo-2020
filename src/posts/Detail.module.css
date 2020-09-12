@@ -2,3 +2,17 @@
     max-width: var(--max-line-length);
     margin: 0 auto;
 }
+
+.root > header {
+    margin-bottom: var(--vertical-grid-size);
+}
+
+.preview {
+    object-fit: cover;
+    width: 100%;
+    display: block;
+    height: calc(var(--vertical-grid-size) * 10);
+    box-shadow: 0 0 14px 3px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    margin-bottom: var(--vertical-grid-size);
+}
