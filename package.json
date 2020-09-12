@@ -8,13 +8,15 @@
     "@testing-library/user-event": "^7.2.1",
     "clsx": "^1.1.1",
     "express": "^4.17.1",
-    "firebase": "^7.19.1",
+    "firebase": "^7.20.0",
     "firebase-admin": "^9.1.1",
+    "mime": "^2.4.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "reset-css": "^5.0.1"
+    "reset-css": "^5.0.1",
+    "slugify": "^1.4.5"
   },
   "scripts": {
     "start": "react-scripts start",

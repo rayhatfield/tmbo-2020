@@ -21,8 +21,8 @@ export default function View (props) {
 
     const onSubmit = useCallback((e) => {
         e.preventDefault();
-        client.upload(file);
-    }, [client, file]);
+        client.upload(file, fileInfo.name);
+    }, [client, file, fileInfo.name]);
 
     const onFileInfoChange = (({ target: { name, value } }) => setFileInfo({ ...fileInfo, [name]: value }))
     const prompt = !file ? 'Put ’er there' : 'Change';

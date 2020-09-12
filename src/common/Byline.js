@@ -6,12 +6,18 @@ import DateTime from './DateTime';
 import style from './Byline.module.css';
 
 export default function Byline ({ post }) {
-    const { author, timestamp } = post || {};
+    const { author, user, timestamp } = post || {};
+    console.log(user);
     return (
         <div className={style.root}>
             {author && (
                 <address>
-                    <Author author={post?.author} />
+                    <Author author={author} />
+                </address>
+            )}
+            {user && (
+                <address>
+                    <Author user={user} />
                 </address>
             )}
             {timestamp && (

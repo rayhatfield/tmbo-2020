@@ -21,7 +21,11 @@ export default function Router (props) {
     const { path: matchPath } = useRouteMatch();
     return (
         <Switch>
-            {routes.map(({ path, ...r }) => <Route key={path} path={`${matchPath}${path}`} {...r} />)}
+            {routes.map(({ path, component: Cmp, ...r }) => (
+                <Route key={path} path={`${matchPath}${path}`} {...r}>
+                    <Cmp {...props} />
+                </Route>
+            ))}
         </Switch>
     );
 }

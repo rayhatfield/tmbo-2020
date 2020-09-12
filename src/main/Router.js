@@ -12,9 +12,9 @@ export default function Routr () {
 
     return checkingLogin ? null : (
         <Switch>
-            { routes.map(({ path, component: Cmp, ...other }) => (
+            { routes.map(({ path, component: Cmp, props }) => (
                 <Route path={path} key={path}>
-                    <Cmp />
+                    <Cmp {...props} />
                 </Route>
             ))}
             <Route path="*">

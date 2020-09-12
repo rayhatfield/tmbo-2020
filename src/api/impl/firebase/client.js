@@ -1,19 +1,29 @@
 import Emitter from 'events';
 
+import mime from 'mime/lite';
+import slugify from 'slugify';
 import * as firebase from 'firebase';
 
 import { EVENTS } from '../../';
 
 const pad = v => `${v}`.padStart(2, '0');
 
-const BASE_IMAGE_PATH = 'uploads/images'
+const extReg = /\.(jpg|gif|png)$/; // mime returns '.jpeg'; allow/prefer '.jpg'
+const withExtension = (name, ext) => (
+    name.endsWith(ext) || extReg.test(name)
+        ? name
+        : `${name}.${ext}`
+);
+
+const BASE_IMAGE_STORAGE_PATH = 'uploads/images';
+const UPLOADS_COLLECTION = 'discussions';
 
 const getImagePath = () => {
     const today = new Date();
     const year = today.getUTCFullYear();
     const month = pad(today.getUTCMonth() + 1);
     const date = pad(today.getUTCDate());
-    return [BASE_IMAGE_PATH, year, month, date].join('/');
+    return [BASE_IMAGE_STORAGE_PATH, year, month, date].join('/');
 }
 
 export default class TmboFirebaseClient extends Emitter {
@@ -29,18 +39,39 @@ export default class TmboFirebaseClient extends Emitter {
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     })
 
-    async upload (file) {
+    async upload (file, title = file.name) {
+        const extension = mime.getExtension(file.type);
         const storageRef = this.app.storage().ref();
-        const filename = `${Date.now()}-${this.app.auth().getUid()}`;
+
+        const filename = slugify(`${Date.now()}-${withExtension(title, extension)}`, '-');
         const uploadRef = storageRef.child(getImagePath()).child(filename);
+        const uid = this.app.auth().getUid();
+        const metadata = {
+            customMetadata: {
+                uid,
+                title
+            }
+        }
         try {
-            const uploadTask = uploadRef.put(file);
+            const uploadTask = uploadRef.put(file, metadata);
             uploadTask.on('state_changed',
-                snapshot => console.log(snapshot.state), // progress, etc
-                error => console.log(error), // error
+                // next
+                snapshot => {
+                    const { state, bytesTransferred, totalBytes } = snapshot;
+                    console.log(state, bytesTransferred, totalBytes, (bytesTransferred / totalBytes * 100) + '%')
+                },
+                // error
+                error => console.log(error),
+                // complete
                 async () => {
                     const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
                     console.log('File available at', downloadURL);
+                    const result = await this.createImageDiscussion({
+                        id: filename,
+                        path: uploadRef.fullPath,
+                        title,
+                    });
+                    console.log(result);
                 },
             )
         }
@@ -49,6 +80,14 @@ export default class TmboFirebaseClient extends Emitter {
             throw e;
         }
 
+    }
+
+    async createImageDiscussion ({ id, path, title }) {
+        return this.db.collection(UPLOADS_COLLECTION).doc(id).set({
+            ...this.commonFields(),
+            path,
+            title,
+        });
     }
 
     async logIn (email, password) {
@@ -66,11 +105,21 @@ export default class TmboFirebaseClient extends Emitter {
         this.app.auth().signOut();
     }
 
-    async posts (start = 0, limit = 10) {
-        return this.db.collection('posts')
+    async imageList (limit = 100) {
+        return this.db.collection(UPLOADS_COLLECTION)
             .orderBy('timestamp', 'desc')
             .limit(limit)
             .get();
+    }
+
+    async posts (type, start = 0, limit = 10) {
+        console.log(type);
+        return type === 'image'
+            ? this.imageList()
+            : this.db.collection('posts')
+                .orderBy('timestamp', 'desc')
+                .limit(limit)
+                .get();
     }
 
     async comments (postId, start = 0, limit = 200) {

@@ -30,14 +30,14 @@ function List ({ posts }) {
     );
 }
 
-export default function ListContainer (props) {
+export default function ListContainer ({ type }) {
     const [docs, setDocs] = React.useState([]);
     const client = useClient();
 
     const getDocs = useCallback(async () => {
-        const snapshot = await client.posts();
+        const snapshot = await client.posts(type);
         setDocs([...snapshot.docs]);
-    }, [client])
+    }, [client, type])
 
     useEffect(() => {
         getDocs();
