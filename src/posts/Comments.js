@@ -42,16 +42,6 @@ export default function CommentListContainer ({ postId }) {
         getDocs();
     }, [client, getDocs]);
 
-    // const post = async (e, title = "wookies and hats") => {
-    //     const p = await client.post(title);
-    //     getDocs();
-    // }
-
-    // const comment = async content => {
-    //     const doc = docs[0];
-    //     const c = await client.comment(doc.id, 'this is crazy.');
-    // }
-
     return (
         <div>
             <CommentList posts={docs} />
