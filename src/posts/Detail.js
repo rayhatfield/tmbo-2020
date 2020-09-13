@@ -1,25 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useClient } from '../api';
 import { Byline } from '../common';
 
+import { useDoc } from './hooks';
 import Comments from './Comments';
 import styles from './Detail.module.css';
-
-const useDoc = (id) => {
-    const [doc, setDoc] = useState();
-    const client = useClient();
-
-    useEffect(() => {
-        async function getDoc () {
-            client.getUploadDoc(id).then(doc => setDoc(doc));
-        }
-        getDoc();
-    }, [client, id]);
-
-    return doc;
-}
 
 const DocInfo = ({ doc }) => {
     if (!doc) {
