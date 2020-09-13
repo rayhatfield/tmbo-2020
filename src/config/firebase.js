@@ -1,10 +1,11 @@
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export default {
-    apiKey: "AIzaSyDF_D1gFaSMQ8MBjOG8qhawWlvBKMDdxEc",
-    authDomain: "tmbo-20200901.firebaseapp.com",
-    databaseURL: "https://tmbo-20200901.firebaseio.com",
-    projectId: "tmbo-20200901",
-    storageBucket: "tmbo-2020",
-    messagingSenderId: "876992453008",
-    appId: "1:876992453008:web:ae25cb168cac6fc00d3b15",
-    measurementId: "G-DGEDW68BPM"
+    apiKey: "AIzaSyBCYKV_5Dx85jfoL1UIVhp22Ai6iXynx18",
+    authDomain: "tmbo-2020.firebaseapp.com",
+    databaseURL: "https://tmbo-2020.firebaseio.com",
+    projectId: "tmbo-2020",
+    storageBucket: "tmbo-2020.appspot.com",
+    messagingSenderId: "819744948693",
+    appId: "1:819744948693:web:a5a5373b278a24ea013d5c",
+    measurementId: "G-41CVXNSNLH"
 };

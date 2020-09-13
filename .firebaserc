@@ -1,6 +1,7 @@
 {
   "projects": {
-    "default": "tmbo-20200901",
-    "staging": "stage-tmbo-2020"
+    "default": "tmbo-2020",
+    "staging": "stage-tmbo-2020",
+    "prod": "tmbo-2020"
   }
 }
