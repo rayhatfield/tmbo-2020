@@ -1,7 +1,7 @@
 import { LoginView, useUser } from '../auth';
 import { View as Posts } from '../posts';
 import Upload from '../upload';
-import Tools from '../tools';
+// import Tools from '../tools';
 
 const anonymous = [
     {
@@ -32,11 +32,11 @@ const authenticated = [
         path: "/u",
         component: Upload,
     },
-    {
-        label: 'dev',
-        path: "/dev",
-        component: Tools,
-    },
+    // {
+    //     label: 'dev',
+    //     path: "/dev",
+    //     component: Tools,
+    // },
 ]
 
 export const useRoutes = () => {
