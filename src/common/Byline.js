@@ -24,10 +24,8 @@ export default function Byline ({ post }) {
 
 Byline.propTypes = {
     post: PropTypes.shape({
-        author: PropTypes.shape({
-            displayName: PropTypes.string,
-            id: PropTypes.string.isRequired
-        }),
+        displayName: PropTypes.string,
+        uid: PropTypes.string.isRequired,
         timestamp: PropTypes.shape({
             toMillis: PropTypes.func.isRequired,
         })
