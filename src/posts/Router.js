@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 import List from './List';
+import Viewer from './Viewer';
 import Detail from './Detail';
 
 const routes = [
@@ -13,8 +14,13 @@ const routes = [
     },
     {
         path: '/:id',
+        component: Viewer,
+        exact: true
+    },
+    {
+        path: '/:id/comments',
         component: Detail
-    }
+    },
 ]
 
 export default function Router (props) {
