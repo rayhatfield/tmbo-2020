@@ -23,3 +23,9 @@
     --font-size-xs: calc(var(--font-size-small) / var(--typography-scale));
     --font-size-xxs: calc(var(--font-size-xs) / var(--typography-scale));
 }
+
+@media (max-width: 480px) {
+    :root {
+        font-size: var(--font-size-small);
+    }
+}

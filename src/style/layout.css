@@ -1,0 +1,9 @@
+:root {
+    --header-margin-bottom: var(--vertical-grid-size);
+}
+
+@media (max-width: 480px) {
+    :root {
+        --header-margin-bottom: 0;
+    }
+}

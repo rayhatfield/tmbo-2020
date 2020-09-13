@@ -15,4 +15,13 @@
     box-shadow: 0 0 14px 3px rgba(0,0,0,0.2);
     border-radius: 4px;
     margin-bottom: var(--vertical-grid-size);
+
+}
+
+@media (max-width: 480px) {
+    .preview {
+        max-width: initial;
+        width: calc(100% + calc(var(--vertical-grid-size) * 2));
+        margin: 0 calc(var(--vertical-grid-size) * -1) var(--vertical-grid-size);
+    }
 }
