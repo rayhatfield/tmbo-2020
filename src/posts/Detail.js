@@ -15,7 +15,7 @@ const DocInfo = ({ doc }) => {
     return (
         <header>
             { downloadURL && (
-                <a href={downloadURL} rel="noreferrer" target="_blank">
+                <a href={downloadURL} rel="noopener noreferrer" target="_blank">
                     <img className={styles.preview} alt={title} src={downloadURL} />
                 </a>
             )}
