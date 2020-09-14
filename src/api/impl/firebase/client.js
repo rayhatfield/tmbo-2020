@@ -2,7 +2,7 @@ import Emitter from 'events';
 
 import mime from 'mime/lite';
 import slugify from 'slugify';
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 
 import { EVENTS } from '../../';
 
